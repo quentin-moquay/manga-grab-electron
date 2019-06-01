@@ -16,6 +16,8 @@
   "license": "GPL-3.0",
   "devDependencies": {
     "electron": "^5.0.2",
-    "mini.css": "^3.0.1"
+    "mini.css": "^3.0.1",
+    "vue": "^2.6.10",
+    "vue-toasted": "^1.1.27"
   }
 }
