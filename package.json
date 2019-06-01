@@ -4,7 +4,7 @@
   "description": "A simple desktop application to grab manga from online scans.",
   "main": "main.js",
   "scripts": {
-    "start": "manga-grab-electron ."
+    "start": "electron ."
   },
   "repository": "https://github.com/quentin-moquay/manga-grab-electron",
   "keywords": [
