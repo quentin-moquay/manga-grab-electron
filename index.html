@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="node_modules/mini.css/dist/mini-dark.min.css">
+    <link rel="stylesheet" href="custom.css">
+    <title>Manga-Grabber</title>
+</head>
+<body>
+<div id="app">
+    <form onsubmit="return false">
+        <fieldset>
+            <legend>Manga grabber</legend>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>URL Template</h4>
+                </div>
+                <div class="col-sm-12">
+                    <label for="url">Pattern</label>
+                    <input type="text" style="width: 85.55%;" v-model="url" id="url" placeholder="Type an URL like https://www.website.com/manga/:chapter:/:page:.jpg"/>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="fieldset">
+                        <div class="col-sm-12">
+                            <h4>Chapter</h4>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="chapter">From</label>
+                            <input type="number" v-model="chapter.value" id="chapter"/>
+                            <label for="final-chapter">To</label>
+                            <input type="number" v-model="finalChapter" id="final-chapter"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="chapter-padding">Pad&nbsp;&nbsp;</label>
+                            <input type="number" v-model="chapter.pad" id="chapter-padding"/>
+                        </div>
+                    </div>
+                    <div class="fieldset">
+                        <div>
+                            <h4>Page</h4>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="page">Start</label>
+                            <input type="number" v-model="page.value" id="page"/>
+                            <label for="page-padding">Pad</label>
+                            <input type="number" v-model="page.pad" id="page-padding"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>URL will be like : <a href="#" v-on:click="open">{{preview_url}}</a></h3>
+                </div>
+            </div>
+            <div>
+                <button v-if="running === false" class="primary float-right" v-on:click="grab">Grab</button>
+                <button v-if="running" class="primary float-right" v-on:click="stop">Stop</button>
+            </div>
+        </fieldset>
+    </form>
+    <div class="row">
+        <div class="card fluid" v-for="chapter in report.chapters">
+            <div class="section">
+                <h3>Chapter {{chapter.index}}</h3>
+                <div class="row">
+                    Page(s) :
+                    <mark>
+                    <span class="col-sm-1" v-for="page in chapter.pages">
+                        {{page}}&nbsp;
+                    </span>
+                    </mark>
+                    <div v-if="chapter.running" class="spinner tertiary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<small>We are using Node.js
+    <script>document.write(process.versions.node)</script>
+    ,
+    Chromium
+    <script>document.write(process.versions.chrome)</script>
+    ,
+    and Electron
+    <script>document.write(process.versions.electron)</script>
+    .
+</small>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/vue-toasted"></script>
+<script>
+      Vue.use(Toasted)
+
+      const Grabber = require('./lib/grabber.js')
+      const PadNumber = require('./lib/pad_number.js')
+      const grabber = new Grabber()
+      var app = new Vue({
+        el: '#app',
+        data: {
+          url: '',
+          chapter: new PadNumber(),
+          finalChapter: 0,
+          page: new PadNumber(),
+          running: false,
+          report: {chapters: []}
+        },
+        computed: {
+          preview_url() {
+              return grabber.replace_name(this)
+          }
+        },
+        methods: {
+          grab() {
+            this.running = true
+            grabber.grab_file(this)
+          },
+          stop() {
+            this.running = false
+          },
+          open() {
+            const shell = require('electron').shell
+            shell.openExternal(this.preview_url)
+          }
+        },
+        watch: {
+          running: function(newValue, oldValue) {
+            if (!newValue && oldValue){
+                Vue.toasted.show("Request completed", {
+                     theme: "outline",
+                     position: "bottom-center",
+                     duration : 3000
+                });
+            }
+          }
+        }
+      })
+
+</script>
+</body>
+</html>

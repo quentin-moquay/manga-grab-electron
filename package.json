@@ -1,0 +1,21 @@
+{
+  "name": "manga-grab-electron",
+  "version": "0.0.1",
+  "description": "A simple desktop application to grab manga from online scans.",
+  "main": "main.js",
+  "scripts": {
+    "start": "manga-grab-electron ."
+  },
+  "repository": "https://github.com/quentin-moquay/manga-grab-electron",
+  "keywords": [
+    "Electron",
+    "manga",
+    "downloader"
+  ],
+  "author": "Quentin MOQUAY",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^5.0.2",
+    "mini.css": "^3.0.1"
+  }
+}

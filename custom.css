@@ -1,0 +1,17 @@
+.fieldset {
+    border: .0625rem solid var(--form-border-color);
+    border-radius: var(--universal-border-radius);
+    margin: calc(var(--universal-margin) / 2);
+    padding: calc(var(--universal-padding) * 2);
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+label {
+  display: inline-block;
+  width: 40px;
+  text-align: right;
+}​
