@@ -20,6 +20,10 @@
                     <label for="url">Pattern</label>
                     <input type="text" style="width: 85.55%;" v-model="url" id="url" placeholder="Type an URL like https://www.website.com/manga/:chapter:/:page:.jpg"/>
                 </div>
+                <div>
+                    <label for="workingDir">Dir.</label>
+                    <input type="file" webkitdirectory id="workingDir" v-model="workingDir"/>
+                </div>
             </div>
             <br/>
             <div class="row">
@@ -109,6 +113,7 @@
           finalChapter: 0,
           page: new PadNumber(),
           running: false,
+          workingDir: '',
           report: {chapters: []}
         },
         computed: {
@@ -119,7 +124,8 @@
         methods: {
           grab() {
             this.running = true
-            grabber.grab_file(this)
+            var dir = document.getElementById("workingDir").files[0].path
+            grabber.grab_file(this, dir)
           },
           stop() {
             this.running = false
