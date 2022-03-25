@@ -15,7 +15,7 @@
   "author": "Quentin MOQUAY",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^7.2.4",
+    "electron": "^13.6.6",
     "mini.css": "^3.0.1",
     "vue": "^2.6.10",
     "vue-toasted": "^1.1.27"
